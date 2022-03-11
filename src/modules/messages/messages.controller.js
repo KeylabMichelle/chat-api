@@ -18,7 +18,25 @@ const MessagesController = {
         });
     },
     create: (req, res) => {
-        res.send('create message');
+        const message = new Message();
+        message.createMessage(req.body).then(result => {
+            if(result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        })
+    },
+
+    delete: (req, res) => {
+        const message = new Message();
+        message.deleteByID(req.params.id).then(result => {
+            if(result) {
+                res.send(result);
+            } else {
+                res.sendStatus(404);
+            }
+        });
     }
 }
 

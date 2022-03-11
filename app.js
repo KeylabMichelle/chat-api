@@ -10,8 +10,15 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+/* 
+ * app.use -- Ejecuta los Middlewares
+ */
+
+// Middleware: Algo en medio de dos funciones (Hace algo con los datos o los transforma)
+
 app.use('/assets', express.static(path.join(__dirname, 'public')));
 
+app.use(express.json()); //Todos los request que me llegue, parsea como JSON 
 
 app.use('/api', apiRoutes);
 
