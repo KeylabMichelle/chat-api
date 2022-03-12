@@ -1,5 +1,6 @@
 const Channel = require("./channel.model");
 const User = require("../users/user.model");
+const Message = require("../messages/message.model");
 
 
 const ChannelsController = {
@@ -54,7 +55,6 @@ const ChannelsController = {
     },
 
     invite: (req,res) => {
-        const user = new User();
         const { id, userID } = req.params;
         const channel = new Channel();
         let channelTemp = new Channel();
@@ -76,9 +76,32 @@ const ChannelsController = {
                 res.sendStatus(404);
             }
         });
-        
-        
 
+    },
+
+
+    pushMessage: (req, res) => {
+        const { id, msgID } = req.params;
+        const channel = new Channel();
+        let channelTemp = new Channel();
+        //const channel = channelTemp.getOne( id );
+        channel.getOne(id).then(result => {
+            if(result) {
+                channelTemp = result;
+                channelTemp.Messages.push(msgID);
+                console.log(channel)
+
+                channel.addMessages(channelTemp).then(result => {
+                    if(result) {
+                        res.send(result);
+                    } else {
+                        res.sendStatus(404);
+                    }
+                })
+            } else {
+                res.sendStatus(404);
+            }
+        });
     }
 
    

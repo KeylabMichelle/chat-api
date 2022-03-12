@@ -100,6 +100,38 @@ class Channel extends Model {
 
              
         })
+
+    }
+
+
+    /* Add msg */
+    addMessages(channel) {
+        return new Promise((resolve, reject) => {
+
+            const channelID = channel._id.toString();
+            console.log(channelID)
+            console.log(channel)
+            const msg = channel.Messages;
+
+            this.collection.findOne({ _id:ObjectId(channelID)}).then(result => {
+                if(!result) {
+                    reject(new Error('Channel incorrect'));
+                } else {
+                    this.collection.updateOne({_id:ObjectId(channelID)},{$set:{Messages: msg}}  ).then(result2 => {
+                        if(!result2) {
+                            reject(new Error('Channel incorrect'));
+                        } else {
+                            resolve(result2);
+                        }
+                        
+                    })     
+                }
+                
+            })  
+
+             
+        })
+
     }
 
 

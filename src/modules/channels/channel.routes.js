@@ -122,5 +122,31 @@ const controller = require('./channels.controller');
  *           description: An object with a single channel's data
  */
  router.put('/invitation/:id/:userID', controller.invite);
+
+
+
+/**
+ * @swagger
+ *   /api/channels/addMessage/{id}/{msgID}:
+ *     put:
+ *       tags:
+ *       - Channels
+ *       description: Add message to channel
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           description: The channel's unique ID
+ *         - in: path
+ *           name: msgID
+ *           required: true
+ *           description: The message's ID
+ *       responses:
+ *         200:
+ *           description: An object with a single channel's data
+ */
+ router.put('/addMessage/:id/:msgID', controller.pushMessage);
+
+
 module.exports = router;
 
