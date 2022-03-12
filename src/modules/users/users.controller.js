@@ -1,4 +1,7 @@
 const User = require("./user.model");
+const Channel = require("../channels/channel.model");
+
+
 
 const UsersController = {
     getAll: (req, res) => {
@@ -52,6 +55,8 @@ const UsersController = {
             return res.send(Error);
         })
     }
+
+    
     
 }
 

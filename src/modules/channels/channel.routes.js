@@ -101,5 +101,26 @@ const controller = require('./channels.controller');
   router.put('/invitationLink', controller.createInvitationLink);
 
 
+/**
+ * @swagger
+ *   /api/channels/invitation/{id}/{userID}:
+ *     put:
+ *       tags:
+ *       - Channels
+ *       description: Join new member to channel
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           description: The channel's unique ID
+ *         - in: path
+ *           name: userID
+ *           required: true
+ *           description: The user's ID
+ *       responses:
+ *         200:
+ *           description: An object with a single channel's data
+ */
+ router.put('/invitation/:id/:userID', controller.invite);
 module.exports = router;
 

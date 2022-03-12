@@ -45,11 +45,40 @@ const ChannelsController = {
         const channel = new Channel();
         channel.createInvitation(req.body.id, req.body.ChannelOwnerID ).then(result => {
             if(!result) {
+                //console.log(req.body.Link)
                 res.sendStatus(404);
             } else {
                 res.send(result);
             }
         })
+    },
+
+    invite: (req,res) => {
+        const user = new User();
+        const { id, userID } = req.params;
+        const channel = new Channel();
+        let channelTemp = new Channel();
+        //const channel = channelTemp.getOne( id );
+        channel.getOne(id).then(result => {
+            if(result) {
+                channelTemp = result;
+                channelTemp.Members.push(userID);
+                console.log(channel)
+
+                channel.joinChannel(channelTemp).then(result => {
+                    if(result) {
+                        res.send(result);
+                    } else {
+                        res.sendStatus(404);
+                    }
+                })
+            } else {
+                res.sendStatus(404);
+            }
+        });
+        
+        
+
     }
 
    

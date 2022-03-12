@@ -2,7 +2,9 @@
 * El modelo es una clase que te deja manipular los datos de la base de datos 
 */
 
+const { ObjectId } = require('mongodb');
 const Model = require('../../core/model');
+const Channel = require('../channels/channel.model');
 
 class User extends Model {
     constructor() {
@@ -48,6 +50,7 @@ class User extends Model {
         })
     }
 
-}
 
+    
+}
 module.exports = User;

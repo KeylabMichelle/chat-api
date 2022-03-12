@@ -5,6 +5,7 @@ const { ObjectId } = require('mongodb');
 class Model {
 
     collection;
+    newCollection;
 
     constructor(collectionName) {
         // Set collection

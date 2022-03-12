@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const Model = require('../../core/model');
 
 
@@ -50,28 +51,58 @@ class Channel extends Model {
     }
 
     /* Create invitation link */
-    /* No me encuentra el canal! */
     createInvitation(id,ChannelOwner) {
         return new Promise((resolve, reject) => {
-            const channel = this.collection.findOne({ id , ChannelOwner }).then(result => {
+            this.collection.findOne({ _id:ObjectId(id), ChannelOwnerID: ChannelOwner}).then(result => {
                 if(!result) {
                     reject(new Error('Owner or Channel incorrect'));
                 } else {
-                    resolve(result);
+                    this.collection.updateOne({_id:ObjectId(id)},{ $set: {"Link" : `http://localhost:3001/api/users/invitation/${id}/<insertUserEmail>`  } }).then(result2 => {
+                        if(!result2) {
+                            reject(new Error('Channel incorrect'));
+                        } else {
+                            resolve(result2);
+                        }
+                        
+                    })   
                 }
                 
             })               
+            
+        })
+    }
 
-            this.collection.updateOne({_id:id},{ $set: {"Link" : `http://localhost:3001/api/channels/newChannel/${id}`  } }).then(result => {
+
+    /* Join Channel */
+    joinChannel(channel) {
+        return new Promise((resolve, reject) => {
+
+            const channelID = channel._id.toString();
+            console.log(channelID)
+            console.log(channel)
+            const memb = channel.Members;
+
+            this.collection.findOne({ _id:ObjectId(channelID)}).then(result => {
                 if(!result) {
                     reject(new Error('Channel incorrect'));
                 } else {
-                    resolve(result);
+                    this.collection.updateOne({_id:ObjectId(channelID)},{$set:{Members: memb}}  ).then(result2 => {
+                        if(!result2) {
+                            reject(new Error('Channel incorrect'));
+                        } else {
+                            resolve(result2);
+                        }
+                        
+                    })     
                 }
                 
-            })   
+            })  
+
+             
         })
     }
+
+
 }
 
 module.exports = Channel;
