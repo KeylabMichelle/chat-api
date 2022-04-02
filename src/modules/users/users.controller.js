@@ -46,7 +46,7 @@ const UsersController = {
         const user = new User();
         user.findByEmail(req.body.email).then(result => { 
             if(result) {
-                res.send(result);
+                res.send(result).status(201);
             } else {
                 res.sendStatus(404);
             }

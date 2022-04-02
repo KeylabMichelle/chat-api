@@ -3,6 +3,7 @@ const path = require('path');
 const Database = require('./src/core/database');
 const apiRoutes = require('./src/routes');
 const dotenv = require('dotenv');
+const cors = require("cors");
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ const port = process.env.PORT || 3000;
  */
 
 // Middleware: Algo en medio de dos funciones (Hace algo con los datos o los transforma)
+
+app.use(cors());
 
 app.use('/assets', express.static(path.join(__dirname, 'public')));
 
